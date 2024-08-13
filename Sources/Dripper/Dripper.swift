@@ -16,6 +16,12 @@ public protocol Dripper<State, Action> {
     var body: Body { get }
 }
 
+extension Dripper where Body == Never {
+    public var body: Body {
+        fatalError()
+    }
+}
+
 extension Dripper where Body: Dripper<State, Action> {
     @inlinable
     public func pour(_ state: State, _ action: Action) -> State {
