@@ -11,4 +11,16 @@ public enum DripperBuilder<State, Action> {
     public static func buildBlock<D: Dripper<State, Action>>(_ dripper: D) -> D {
         dripper
     }
+
+    @inlinable
+    public static func buildExpression<D: Dripper<State, Action>>(_ expression: D) -> D {
+        expression
+    }
+
+    @inlinable
+    public static func buildExpression(
+        _ expression: any Dripper<State, Action>
+    ) -> Drip<State, Action> {
+        Drip(expression)
+    }
 }
