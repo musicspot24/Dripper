@@ -11,10 +11,12 @@ public struct Drip<State, Action>: Dripper {
     @usableFromInline
     let drip: (State, Action) -> State
 
+    @inlinable
     public init(_ drip: @escaping (_ state: State, _ action: Action) -> State) {
         self.drip = drip
     }
 
+    @inlinable
     public func pour(_ state: State, _ action: Action) -> State {
         self.drip(state, action)
     }

@@ -28,3 +28,5 @@ extension Dripper where Body: Dripper<State, Action> {
         body.pour(state, action)
     }
 }
+
+public typealias DripperOf<D: Dripper> = Dripper<D.State, D.Action>
