@@ -24,7 +24,7 @@ extension Dripper where Body == Never {
 
 extension Dripper where Body: Dripper<State, Action> {
     @inlinable
-    public func pour(_ state: State, _ action: Action) -> State {
+    public func pour(_ state: Body.State, _ action: Body.Action) -> Body.State {
         body.pour(state, action)
     }
 }
