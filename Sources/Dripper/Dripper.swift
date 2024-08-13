@@ -10,7 +10,7 @@ public protocol Dripper<State, Action> {
     associatedtype Action
     associatedtype Body
 
-    func pour(_ state: State, _ action: Action) -> State
+    func drip(_ state: State, _ action: Action) -> State
 
     @DripperBuilder<State, Action>
     var body: Body { get }
@@ -24,8 +24,8 @@ extension Dripper where Body == Never {
 
 extension Dripper where Body: Dripper<State, Action> {
     @inlinable
-    public func pour(_ state: Body.State, _ action: Body.Action) -> Body.State {
-        body.pour(state, action)
+    public func drip(_ state: Body.State, _ action: Body.Action) -> Body.State {
+        body.drip(state, action)
     }
 }
 

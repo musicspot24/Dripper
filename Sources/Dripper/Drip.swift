@@ -24,11 +24,11 @@ public struct Drip<State, Action>: Dripper {
     }
 
     public init(_ dripper: some Dripper<State, Action>) {
-        self.init(internal: dripper.pour)
+        self.init(internal: dripper.drip)
     }
 
     @inlinable
-    public func pour(_ state: State, _ action: Action) -> State {
+    public func drip(_ state: State, _ action: Action) -> State {
         self.drip(state, action)
     }
 }
