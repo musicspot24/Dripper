@@ -12,7 +12,6 @@ public typealias StationOf<D: Dripper> = Station<D.State, D.Action>
 // MARK: - Station
 
 @dynamicMemberLookup
-@Observable
 public final class Station<State: Observable, Action> {
 
     // MARK: Properties
@@ -20,7 +19,6 @@ public final class Station<State: Observable, Action> {
     var state: State
 
     private let dripper: any Dripper<State, Action>
-    private let _$observationRegistrar = ObservationRegistrar()
 
     // MARK: Lifecycle
 
