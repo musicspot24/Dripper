@@ -9,7 +9,12 @@ import Observation
 
 import Dripper
 
+// MARK: - Counter
+
 struct Counter: Dripper {
+
+    // MARK: Nested Types
+
     @Observable
     final class State {
         var counter: Int = .zero
@@ -20,6 +25,8 @@ struct Counter: Dripper {
         case decreaseCounter
         case resetCounter
     }
+
+    // MARK: Computed Properties
 
     var body: some Dripper<State, Action> {
         Drip { state, action in
@@ -39,8 +46,15 @@ struct Counter: Dripper {
 
 import SwiftUI
 
+// MARK: - CounterView
+
 struct CounterView: View {
+
+    // MARK: Properties
+
     var station: StationOf<Counter>
+
+    // MARK: Content
 
     var body: some View {
         VStack {
@@ -63,13 +77,11 @@ struct CounterView: View {
                 .clipShape(.rect(cornerRadius: 10.0))
             }
 
-            Button("Reset") {
-
-            }
-            .padding()
-            .foregroundStyle(.red)
-            .background(.regularMaterial)
-            .clipShape(.rect(cornerRadius: 10.0))
+            Button("Reset") { }
+                .padding()
+                .foregroundStyle(.red)
+                .background(.regularMaterial)
+                .clipShape(.rect(cornerRadius: 10.0))
         }
         .font(.headline)
     }

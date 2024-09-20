@@ -7,6 +7,8 @@
 
 public typealias DripperOf<D: Dripper> = Dripper<D.State, D.Action>
 
+// MARK: - Dripper
+
 public protocol Dripper<State, Action> {
     associatedtype State
     associatedtype Action

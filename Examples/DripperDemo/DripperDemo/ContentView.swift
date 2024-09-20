@@ -18,7 +18,6 @@ struct ContentView: View {
                 .foregroundStyle(.tint)
             Button {
                 let a = counter.drip(.init(), .increaseCounter)
-                print(a.counter)
             } label: {
                 Text("+1")
             }

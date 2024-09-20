@@ -9,24 +9,31 @@ import Foundation
 
 public typealias StationOf<D: Dripper> = Station<D.State, D.Action>
 
+// MARK: - Station
+
 @dynamicMemberLookup
 @Observable
 public final class Station<State, Action> {
-    private let dripper: any Dripper<State, Action>
+
+    // MARK: Properties
+
     var state: State
 
+    private let dripper: any Dripper<State, Action>
     private let _$observationRegistrar = ObservationRegistrar()
 
-    public convenience init<D: Dripper<State, Action>>(
+    // MARK: Lifecycle
+
+    public convenience init(
         initialState: State,
-        dripper: D
+        dripper: some Dripper<State, Action>
     ) {
         self.init(state: initialState, dripper: dripper)
     }
 
-    public convenience init<D: Dripper<State, Action>>(
+    public convenience init(
         initialState: State,
-        @DripperBuilder<State, Action> _ dripperBuilder: () -> D
+        @DripperBuilder<State, Action> _ dripperBuilder: () -> some Dripper<State, Action>
     ) {
         self.init(state: initialState, dripper: dripperBuilder())
     }
@@ -39,6 +46,8 @@ public final class Station<State, Action> {
         self.dripper = dripper
     }
 
+    // MARK: Functions
+
     public func pour(_ action: Action) {
         dripper.drip(state, action)
     }
@@ -47,7 +56,7 @@ public final class Station<State, Action> {
         dynamicMember dynamicMember: WritableKeyPath<State, Member>
     ) -> Member {
         get {
-            return state[keyPath: dynamicMember]
+            state[keyPath: dynamicMember]
         }
         set {
             state[keyPath: dynamicMember] = newValue

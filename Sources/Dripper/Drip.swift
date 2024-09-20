@@ -8,13 +8,12 @@
 import Foundation
 
 public struct Drip<State, Action>: Dripper {
-    @usableFromInline
-    let drip: (State, Action) -> State
 
-    @usableFromInline
-    init(internal drip: @escaping (State, Action) -> State) {
-        self.drip = drip
-    }
+    // MARK: Properties
+
+    @usableFromInline let drip: (State, Action) -> State
+
+    // MARK: Lifecycle
 
     @inlinable
     public init(_ drip: @escaping (_ state: State, _ action: Action) -> State) {
@@ -25,8 +24,15 @@ public struct Drip<State, Action>: Dripper {
         self.init(internal: dripper.drip)
     }
 
+    @usableFromInline
+    init(internal drip: @escaping (State, Action) -> State) {
+        self.drip = drip
+    }
+
+    // MARK: Functions
+
     @inlinable
     public func drip(_ state: State, _ action: Action) -> State {
-        self.drip(state, action)
+        drip(state, action)
     }
 }
