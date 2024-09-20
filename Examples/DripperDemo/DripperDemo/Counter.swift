@@ -77,11 +77,13 @@ struct CounterView: View {
                 .clipShape(.rect(cornerRadius: 10.0))
             }
 
-            Button("Reset") { }
-                .padding()
-                .foregroundStyle(.red)
-                .background(.regularMaterial)
-                .clipShape(.rect(cornerRadius: 10.0))
+            Button("Reset") {
+                station.pour(.resetCounter)
+            }
+            .padding()
+            .foregroundStyle(.red)
+            .background(.regularMaterial)
+            .clipShape(.rect(cornerRadius: 10.0))
         }
         .font(.headline)
     }
