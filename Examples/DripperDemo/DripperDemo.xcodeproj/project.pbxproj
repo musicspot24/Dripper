@@ -7,45 +7,47 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FD97C8EF2C6E36D600990D03 /* Dripper in Frameworks */ = {isa = PBXBuildFile; productRef = FD97C8EE2C6E36D600990D03 /* Dripper */; };
+		FD5BAAF32C6B34700076482B /* Dripper in Frameworks */ = {isa = PBXBuildFile; productRef = FD5BAAF22C6B34700076482B /* Dripper */; };
+		FD760AB72C9D4964005438A7 /* Dripper in Frameworks */ = {isa = PBXBuildFile; productRef = FD760AB62C9D4964005438A7 /* Dripper */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FD78A34F2C6E2B5A0021DA00 /* DripperExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DripperExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD5BAAE02C6B326B0076482B /* DripperDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DripperDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		FD78A3512C6E2B5A0021DA00 /* DripperExample */ = {
+		FD5BAAE22C6B326B0076482B /* DripperDemo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = DripperExample;
+			path = DripperDemo;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		FD78A34C2C6E2B5A0021DA00 /* Frameworks */ = {
+		FD5BAADD2C6B326B0076482B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD97C8EF2C6E36D600990D03 /* Dripper in Frameworks */,
+				FD5BAAF32C6B34700076482B /* Dripper in Frameworks */,
+				FD760AB72C9D4964005438A7 /* Dripper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FD78A3462C6E2B5A0021DA00 = {
+		FD5BAAD72C6B326B0076482B = {
 			isa = PBXGroup;
 			children = (
-				FD78A3512C6E2B5A0021DA00 /* DripperExample */,
-				FD78A3502C6E2B5A0021DA00 /* Products */,
+				FD5BAAE22C6B326B0076482B /* DripperDemo */,
+				FD5BAAE12C6B326B0076482B /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		FD78A3502C6E2B5A0021DA00 /* Products */ = {
+		FD5BAAE12C6B326B0076482B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FD78A34F2C6E2B5A0021DA00 /* DripperExample.app */,
+				FD5BAAE02C6B326B0076482B /* DripperDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -53,68 +55,69 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FD78A34E2C6E2B5A0021DA00 /* DripperExample */ = {
+		FD5BAADF2C6B326B0076482B /* DripperDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FD78A35D2C6E2B5C0021DA00 /* Build configuration list for PBXNativeTarget "DripperExample" */;
+			buildConfigurationList = FD5BAAEE2C6B326C0076482B /* Build configuration list for PBXNativeTarget "DripperDemo" */;
 			buildPhases = (
-				FD78A34B2C6E2B5A0021DA00 /* Sources */,
-				FD78A34C2C6E2B5A0021DA00 /* Frameworks */,
-				FD78A34D2C6E2B5A0021DA00 /* Resources */,
+				FD5BAADC2C6B326B0076482B /* Sources */,
+				FD5BAADD2C6B326B0076482B /* Frameworks */,
+				FD5BAADE2C6B326B0076482B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				FD78A3512C6E2B5A0021DA00 /* DripperExample */,
+				FD5BAAE22C6B326B0076482B /* DripperDemo */,
 			);
-			name = DripperExample;
+			name = DripperDemo;
 			packageProductDependencies = (
-				FD97C8EE2C6E36D600990D03 /* Dripper */,
+				FD5BAAF22C6B34700076482B /* Dripper */,
+				FD760AB62C9D4964005438A7 /* Dripper */,
 			);
-			productName = DripperExample;
-			productReference = FD78A34F2C6E2B5A0021DA00 /* DripperExample.app */;
+			productName = DripperDemo;
+			productReference = FD5BAAE02C6B326B0076482B /* DripperDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		FD78A3472C6E2B5A0021DA00 /* Project object */ = {
+		FD5BAAD82C6B326B0076482B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1610;
 				TargetAttributes = {
-					FD78A34E2C6E2B5A0021DA00 = {
+					FD5BAADF2C6B326B0076482B = {
 						CreatedOnToolsVersion = 16.1;
 					};
 				};
 			};
-			buildConfigurationList = FD78A34A2C6E2B5A0021DA00 /* Build configuration list for PBXProject "DripperExample" */;
+			buildConfigurationList = FD5BAADB2C6B326B0076482B /* Build configuration list for PBXProject "DripperDemo" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = FD78A3462C6E2B5A0021DA00;
+			mainGroup = FD5BAAD72C6B326B0076482B;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				FD97C8ED2C6E36D600990D03 /* XCLocalSwiftPackageReference "../Dripper" */,
+				FD760AB52C9D4964005438A7 /* XCLocalSwiftPackageReference "../../../Dripper" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = FD78A3502C6E2B5A0021DA00 /* Products */;
+			productRefGroup = FD5BAAE12C6B326B0076482B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FD78A34E2C6E2B5A0021DA00 /* DripperExample */,
+				FD5BAADF2C6B326B0076482B /* DripperDemo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		FD78A34D2C6E2B5A0021DA00 /* Resources */ = {
+		FD5BAADE2C6B326B0076482B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -124,7 +127,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		FD78A34B2C6E2B5A0021DA00 /* Sources */ = {
+		FD5BAADC2C6B326B0076482B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -134,7 +137,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		FD78A35B2C6E2B5C0021DA00 /* Debug */ = {
+		FD5BAAEC2C6B326C0076482B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -197,7 +200,7 @@
 			};
 			name = Debug;
 		};
-		FD78A35C2C6E2B5C0021DA00 /* Release */ = {
+		FD5BAAED2C6B326C0076482B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -253,14 +256,14 @@
 			};
 			name = Release;
 		};
-		FD78A35E2C6E2B5C0021DA00 /* Debug */ = {
+		FD5BAAEF2C6B326C0076482B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"DripperExample/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"DripperDemo/Preview Content\"";
 				DEVELOPMENT_TEAM = XW996HTK32;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -269,12 +272,13 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.junnos.DripperExample;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.junnos.DripperDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -282,14 +286,14 @@
 			};
 			name = Debug;
 		};
-		FD78A35F2C6E2B5C0021DA00 /* Release */ = {
+		FD5BAAF02C6B326C0076482B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"DripperExample/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"DripperDemo/Preview Content\"";
 				DEVELOPMENT_TEAM = XW996HTK32;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -298,12 +302,13 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.junnos.DripperExample;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.junnos.DripperDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -314,20 +319,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FD78A34A2C6E2B5A0021DA00 /* Build configuration list for PBXProject "DripperExample" */ = {
+		FD5BAADB2C6B326B0076482B /* Build configuration list for PBXProject "DripperDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FD78A35B2C6E2B5C0021DA00 /* Debug */,
-				FD78A35C2C6E2B5C0021DA00 /* Release */,
+				FD5BAAEC2C6B326C0076482B /* Debug */,
+				FD5BAAED2C6B326C0076482B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FD78A35D2C6E2B5C0021DA00 /* Build configuration list for PBXNativeTarget "DripperExample" */ = {
+		FD5BAAEE2C6B326C0076482B /* Build configuration list for PBXNativeTarget "DripperDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FD78A35E2C6E2B5C0021DA00 /* Debug */,
-				FD78A35F2C6E2B5C0021DA00 /* Release */,
+				FD5BAAEF2C6B326C0076482B /* Debug */,
+				FD5BAAF02C6B326C0076482B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -335,18 +340,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		FD97C8ED2C6E36D600990D03 /* XCLocalSwiftPackageReference "../Dripper" */ = {
+		FD760AB52C9D4964005438A7 /* XCLocalSwiftPackageReference "../../../Dripper" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../Dripper;
+			relativePath = ../../../Dripper;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FD97C8EE2C6E36D600990D03 /* Dripper */ = {
+		FD5BAAF22C6B34700076482B /* Dripper */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Dripper;
+		};
+		FD760AB62C9D4964005438A7 /* Dripper */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Dripper;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = FD78A3472C6E2B5A0021DA00 /* Project object */;
+	rootObject = FD5BAAD82C6B326B0076482B /* Project object */;
 }

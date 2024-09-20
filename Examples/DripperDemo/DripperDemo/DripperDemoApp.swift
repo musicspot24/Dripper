@@ -1,14 +1,14 @@
 //
-//  DripperExampleApp.swift
-//  DripperExample
+//  DripperDemoApp.swift
+//  DripperDemo
 //
-//  Created by 이창준 on 8/15/24.
+//  Created by 이창준 on 8/13/24.
 //
 
 import SwiftUI
 
 @main
-struct DripperExampleApp: App {
+struct DripperDemoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
