@@ -5,6 +5,8 @@
 //  Created by 이창준 on 8/13/24.
 //
 
+public typealias DripperOf<D: Dripper> = Dripper<D.State, D.Action>
+
 public protocol Dripper<State, Action> {
     associatedtype State
     associatedtype Action
@@ -28,5 +30,3 @@ extension Dripper where Body: Dripper<State, Action> {
         body.drip(state, action)
     }
 }
-
-public typealias DripperOf<D: Dripper> = Dripper<D.State, D.Action>

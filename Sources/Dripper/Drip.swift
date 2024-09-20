@@ -12,9 +12,7 @@ public struct Drip<State, Action>: Dripper {
     let drip: (State, Action) -> State
 
     @usableFromInline
-    init(
-        internal drip: @escaping (State, Action) -> State
-    ) {
+    init(internal drip: @escaping (State, Action) -> State) {
         self.drip = drip
     }
 
