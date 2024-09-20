@@ -13,7 +13,7 @@ public typealias StationOf<D: Dripper> = Station<D.State, D.Action>
 
 @dynamicMemberLookup
 @Observable
-public final class Station<State, Action> {
+public final class Station<State: Observable, Action> {
 
     // MARK: Properties
 

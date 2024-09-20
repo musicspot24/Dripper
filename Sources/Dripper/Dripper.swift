@@ -5,12 +5,14 @@
 //  Created by 이창준 on 8/13/24.
 //
 
+import Foundation
+
 public typealias DripperOf<D: Dripper> = Dripper<D.State, D.Action>
 
 // MARK: - Dripper
 
 public protocol Dripper<State, Action> {
-    associatedtype State
+    associatedtype State: Observable
     associatedtype Action
     associatedtype Body
 
