@@ -47,7 +47,10 @@ public final class Station<State: Observable, Action> {
     // MARK: Functions
 
     public func pour(_ action: Action) {
-        dripper.drip(state, action)
+        let effect = dripper.drip(state, action)
+        if let action = effect() {
+            pour(action)
+        }
     }
 
     public subscript<Member>(

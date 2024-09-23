@@ -6,6 +6,7 @@
 //
 
 import Observation
+import OSLog
 
 import Dripper
 
@@ -37,9 +38,12 @@ struct Counter: Dripper {
                 state.counter -= 1
             case .resetCounter:
                 state.counter = .zero
+                return {
+                    self.drip(state, .increaseCounter)()
+                }
             }
 
-            return state
+            return { return nil }
         }
     }
 }
