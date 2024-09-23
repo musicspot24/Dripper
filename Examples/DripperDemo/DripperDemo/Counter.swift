@@ -39,11 +39,11 @@ struct Counter: Dripper {
             case .resetCounter:
                 state.counter = .zero
                 return {
-                    self.drip(state, .increaseCounter)()
+                    drip(state, .increaseCounter)()
                 }
             }
 
-            return { return nil }
+            return { nil }
         }
     }
 }

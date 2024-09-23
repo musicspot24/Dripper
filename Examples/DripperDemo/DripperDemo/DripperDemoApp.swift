@@ -7,11 +7,17 @@
 
 import SwiftUI
 
+import Dripper
+
 @main
 struct DripperDemoApp: App {
+    private let counterStation = Station(initialState: Counter.State()) {
+        Counter()
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CounterView(station: counterStation)
         }
     }
 }

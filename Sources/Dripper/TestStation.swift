@@ -77,7 +77,7 @@ class TestDripper: Dripper {
 
     var body: some Dripper<State, Action> {
         Drip(internal: { _, _ in
-            return {  return nil }
+            { nil }
         })
     }
 }
