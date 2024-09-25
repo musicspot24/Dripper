@@ -61,23 +61,3 @@ public final class TestStation<State, Action> {
         // TODO: Implement testing pour
     }
 }
-
-// MARK: - TestDripper
-
-class TestDripper: Dripper {
-
-    // MARK: Nested Types
-
-    @Observable
-    final class State { }
-
-    struct Action { }
-
-    // MARK: Computed Properties
-
-    var body: some Dripper<State, Action> {
-        Drip(internal: { _, _ in
-            { nil }
-        })
-    }
-}

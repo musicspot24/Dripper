@@ -25,6 +25,7 @@ struct Counter: Dripper {
         case increaseCounter
         case decreaseCounter
         case resetCounter
+        case randomNumber
     }
 
     // MARK: Computed Properties
@@ -38,12 +39,18 @@ struct Counter: Dripper {
                 state.counter -= 1
             case .resetCounter:
                 state.counter = .zero
-                return {
-                    drip(state, .increaseCounter)()
+            case .randomNumber:
+                return .init { _ in
+                    func randomNumber() async throws -> Int {
+                        try await Task.sleep(for: .seconds(2))
+                        return Int.random(in: 0...10)
+                    }
+                    let randomNumber = try await randomNumber()
+                    state.counter = randomNumber
                 }
             }
 
-            return { nil }
+            return .init { _ in }
         }
     }
 }
@@ -86,6 +93,13 @@ struct CounterView: View {
             }
             .padding()
             .foregroundStyle(.red)
+            .background(.regularMaterial)
+            .clipShape(.rect(cornerRadius: 10.0))
+
+            Button("Feeling Lucky?") {
+                station.pour(.randomNumber)
+            }
+            .padding()
             .background(.regularMaterial)
             .clipShape(.rect(cornerRadius: 10.0))
         }

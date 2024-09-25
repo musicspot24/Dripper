@@ -25,7 +25,7 @@ public struct Drip<State: Observable, Action>: Dripper {
     }
 
     @usableFromInline
-    init(internal drip: @escaping (State, Action) -> Effect<Action>) {
+    init(internal drip: @escaping (_ state: State, _ action: Action) -> Effect<Action>) {
         self.drip = drip
     }
 

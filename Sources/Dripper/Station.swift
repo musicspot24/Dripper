@@ -12,6 +12,7 @@ public typealias StationOf<D: Dripper> = Station<D.State, D.Action>
 // MARK: - Station
 
 @dynamicMemberLookup
+@MainActor
 public final class Station<State: Observable, Action> {
 
     // MARK: Properties
@@ -48,8 +49,11 @@ public final class Station<State: Observable, Action> {
 
     public func pour(_ action: Action) {
         let effect = dripper.drip(state, action)
-        if let action = effect() {
-            pour(action)
+        // FIXME: Currently, side effect is called no matter it's empty or not.
+        Task {
+            try await effect.run { action in
+                pour(action)
+            }
         }
     }
 
