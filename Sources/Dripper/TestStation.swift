@@ -1,5 +1,5 @@
 //
-//  Station.swift
+//  TestStation.swift
 //  Dripper
 //
 //  Created by 이창준 on 9/20/24.
@@ -7,15 +7,18 @@
 
 import Foundation
 
-public typealias StationOf<D: Dripper> = Station<D.State, D.Action>
+// MARK: - TestStation
 
-// MARK: - Station
-
-@dynamicMemberLookup
-@MainActor
-public final class Station<State: Observable, Action> {
+public final class TestStation<State, Action> {
 
     // MARK: Properties
+
+    //    private let fileID: StaticString
+    //    private let filePath: StaticString
+    //    private let line: UInt
+    //    private let column: UInt
+
+    //    public var timeout: UInt64
 
     var state: State
 
@@ -47,24 +50,14 @@ public final class Station<State: Observable, Action> {
 
     // MARK: Functions
 
-    public func pour(_ action: Action) {
-        let effect = dripper.drip(state, action)
-        // FIXME: Currently, side effect is called no matter it's empty or not.
-        Task {
-            try await effect.run { action in
-                pour(action)
-            }
-        }
-    }
-
-    public subscript<Member>(
-        dynamicMember dynamicMember: WritableKeyPath<State, Member>
-    ) -> Member {
-        get {
-            state[keyPath: dynamicMember]
-        }
-        set {
-            state[keyPath: dynamicMember] = newValue
-        }
+    public func pour(
+        _: Action,
+        assert _: ((_ state: State) throws -> Void)? = nil,
+        fileID _: StaticString = #fileID,
+        file _: StaticString = #filePath,
+        line _: UInt = #line,
+        column _: UInt = #column
+    ) async {
+        // TODO: Implement testing pour
     }
 }
