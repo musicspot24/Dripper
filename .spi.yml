@@ -1,6 +1,6 @@
 version: 1
 builder:
   configs:
-  - platform: ios
-    scheme: Dripper
-  - documentation_targets: [Dripper]
+    - platform: ios
+      scheme: Dripper
+    - documentation_targets: [Dripper]
