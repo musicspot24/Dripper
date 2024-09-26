@@ -6,16 +6,19 @@ import PackageDescription
 let package = Package(
     name: "Dripper",
     platforms: [
-        .iOS(.v17)
+        .iOS(.v17),
+        .macOS(.v14),
     ],
     products: [
         .library(
             name: "Dripper",
-            targets: ["Dripper"]),
+            targets: ["Dripper"]
+        ),
     ],
     targets: [
         .target(
-            name: "Dripper"),
+            name: "Dripper"
+        ),
 
     ],
     swiftLanguageModes: [.v6]
