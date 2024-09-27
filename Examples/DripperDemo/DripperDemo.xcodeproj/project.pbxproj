@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD2F25DD2CA6D18600092190 /* Dripper in Frameworks */ = {isa = PBXBuildFile; productRef = FD2F25DC2CA6D18600092190 /* Dripper */; };
 		FD5BAAF32C6B34700076482B /* Dripper in Frameworks */ = {isa = PBXBuildFile; productRef = FD5BAAF22C6B34700076482B /* Dripper */; };
 		FD760AB72C9D4964005438A7 /* Dripper in Frameworks */ = {isa = PBXBuildFile; productRef = FD760AB62C9D4964005438A7 /* Dripper */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD2F25DD2CA6D18600092190 /* Dripper in Frameworks */,
 				FD5BAAF32C6B34700076482B /* Dripper in Frameworks */,
 				FD760AB72C9D4964005438A7 /* Dripper in Frameworks */,
 			);
@@ -74,6 +76,7 @@
 			packageProductDependencies = (
 				FD5BAAF22C6B34700076482B /* Dripper */,
 				FD760AB62C9D4964005438A7 /* Dripper */,
+				FD2F25DC2CA6D18600092190 /* Dripper */,
 			);
 			productName = DripperDemo;
 			productReference = FD5BAAE02C6B326B0076482B /* DripperDemo.app */;
@@ -104,7 +107,7 @@
 			mainGroup = FD5BAAD72C6B326B0076482B;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				FD760AB52C9D4964005438A7 /* XCLocalSwiftPackageReference "../../../Dripper" */,
+				FD2F25DB2CA6D18600092190 /* XCRemoteSwiftPackageReference "Dripper" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FD5BAAE12C6B326B0076482B /* Products */;
@@ -339,14 +342,23 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		FD760AB52C9D4964005438A7 /* XCLocalSwiftPackageReference "../../../Dripper" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../../Dripper;
+/* Begin XCRemoteSwiftPackageReference section */
+		FD2F25DB2CA6D18600092190 /* XCRemoteSwiftPackageReference "Dripper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/musicspot24/Dripper";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.1;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FD2F25DC2CA6D18600092190 /* Dripper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FD2F25DB2CA6D18600092190 /* XCRemoteSwiftPackageReference "Dripper" */;
+			productName = Dripper;
+		};
 		FD5BAAF22C6B34700076482B /* Dripper */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Dripper;

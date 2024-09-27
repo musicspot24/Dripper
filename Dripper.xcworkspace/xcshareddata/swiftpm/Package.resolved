@@ -1,0 +1,15 @@
+{
+  "originHash" : "8e82cc3ea68d8bc22a4c857e9ea0d4461f5fc8f70b3a6f83d0c8c85c43150099",
+  "pins" : [
+    {
+      "identity" : "dripper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/musicspot24/Dripper",
+      "state" : {
+        "revision" : "2958d923f618f8fa3b93fb86121927eaae441bc7",
+        "version" : "0.0.1"
+      }
+    }
+  ],
+  "version" : 3
+}
