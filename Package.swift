@@ -19,6 +19,12 @@ let package = Package(
         .target(
             name: "Dripper"
         ),
+        .testTarget(
+            name: "DripperTests",
+            dependencies: [
+                .target(name: "Dripper"),
+            ]
+        ),
 
     ],
     swiftLanguageModes: [.v6]
