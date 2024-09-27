@@ -49,10 +49,12 @@ public final class Station<State: Observable, Action> {
 
     public func pour(_ action: Action) {
         let effect = dripper.drip(state, action)
-        // FIXME: Currently, side effect is called no matter it's empty or not.
-        Task {
-            try await effect.run { action in
-                pour(action)
+
+        if let effect {
+            Task {
+                await effect.kettle(
+                    Pour { self.pour($0) }
+                )
             }
         }
     }

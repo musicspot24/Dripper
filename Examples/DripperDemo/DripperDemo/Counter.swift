@@ -40,17 +40,18 @@ struct Counter: Dripper {
             case .resetCounter:
                 state.counter = .zero
             case .randomNumber:
-                return .init { _ in
+                return .run { pour in
                     func randomNumber() async throws -> Int {
-                        try await Task.sleep(for: .seconds(2))
+                        try await Task.sleep(for: .seconds(1))
                         return Int.random(in: 0...10)
                     }
                     let randomNumber = try await randomNumber()
+                    await pour(.decreaseCounter)
                     state.counter = randomNumber
                 }
             }
 
-            return .init { _ in }
+            return .none
         }
     }
 }
