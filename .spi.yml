@@ -1,0 +1,8 @@
+version: 1
+builder:
+  configs:
+    - platform: ios
+      scheme: Dripper
+    - platform: macos-xcodebuild
+      scheme: Dripper
+    - documentation_targets: [Dripper]
