@@ -1,6 +1,6 @@
 //
 //  Counter.swift
-//  DripperDemo
+//  Counter
 //
 //  Created by 이창준 on 8/13/24.
 //

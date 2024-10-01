@@ -2,5 +2,6 @@ version: 1
 builder:
   configs:
     - platform: ios
-      documentation_targets: [Dripper]
+      scheme: Dripper
+    - documentation_targets: [Dripper]
       swift-version: 6.0
