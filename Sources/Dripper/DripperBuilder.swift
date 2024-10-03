@@ -8,7 +8,7 @@
 import Foundation
 
 @resultBuilder
-public enum DripperBuilder<State: Observable & Sendable, Action> {
+public enum DripperBuilder<State: Observable, Action> {
     @inlinable
     public static func buildBlock<D: Dripper<State, Action>>(_ dripper: D) -> D {
         dripper
