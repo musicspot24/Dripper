@@ -13,13 +13,6 @@ public final class TestStation<State, Action> {
 
     // MARK: Properties
 
-    //    private let fileID: StaticString
-    //    private let filePath: StaticString
-    //    private let line: UInt
-    //    private let column: UInt
-
-    //    public var timeout: UInt64
-
     var state: State
 
     private let dripper: any Dripper<State, Action>
