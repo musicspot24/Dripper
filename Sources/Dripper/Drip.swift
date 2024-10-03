@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Drip<State: Observable, Action>: Dripper {
+public struct Drip<State: Observable & Sendable, Action>: Dripper {
 
     // MARK: Properties
 

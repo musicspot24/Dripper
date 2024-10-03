@@ -12,7 +12,7 @@ public typealias DripperOf<D: Dripper> = Dripper<D.State, D.Action>
 // MARK: - Dripper
 
 public protocol Dripper<State, Action> {
-    associatedtype State: Observable
+    associatedtype State: Observable & Sendable
     associatedtype Action
     associatedtype Body
 
@@ -24,7 +24,14 @@ public protocol Dripper<State, Action> {
 
 extension Dripper where Body == Never {
     public var body: Body {
-        fatalError()
+        fatalError(
+            """
+            '\(Self.self)' has no body. …
+
+            Do not access a dripper's 'body' property directly, as it may not exist. To run a dripper, \
+            call 'Dripper.drip(_ state:_ action:)', instead.
+            """
+        )
     }
 }
 

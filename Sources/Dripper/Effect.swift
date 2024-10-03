@@ -40,6 +40,7 @@ extension Effect {
 
     // MARK: Static Computed Properties
 
+    @inlinable
     public static var none: Self {
         Self { _ in }
     }
