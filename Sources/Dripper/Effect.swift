@@ -50,7 +50,7 @@ extension Effect {
 
     public static func run(
         blend: @escaping (_ pour: Pour<Action>) async throws -> Void,
-        catch errorHandler: (@Sendable (_ error: any Error, _ pour: Pour<Action>) async -> Void)? = nil,
+        catch errorHandler: ((_ error: any Error, _ pour: Pour<Action>) async -> Void)? = nil,
         fileID: StaticString = #fileID,
         line: UInt = #line
     ) -> Self {
