@@ -52,7 +52,7 @@ public final class Station<State: Observable, Action> {
 
         if let effect {
             Task {
-                await effect.kettle(
+                await effect.blend(
                     Pour { self.pour($0) }
                 )
             }

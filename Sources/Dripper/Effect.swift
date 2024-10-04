@@ -11,13 +11,13 @@ import OSLog
 // MARK: - Effect
 
 public struct Effect<Action> {
-    public typealias Kettle = @Sendable (_ blend: Pour<Action>) async -> Void
+    public typealias Blend = (_ blend: Pour<Action>) async -> Void
 
-    @usableFromInline let kettle: Kettle
+    @usableFromInline let blend: Blend
 
     @usableFromInline
-    init(kettle: @escaping Kettle) {
-        self.kettle = kettle
+    init(blend: @escaping Blend) {
+        self.blend = blend
     }
 }
 
@@ -27,6 +27,7 @@ public struct Effect<Action> {
 public struct Pour<Action>: Sendable {
     let pour: @MainActor @Sendable (Action) -> Void
 
+    @usableFromInline
     init(pour: @escaping @MainActor @Sendable (Action) -> Void) {
         self.pour = pour
     }
@@ -48,14 +49,14 @@ extension Effect {
     // MARK: Static Functions
 
     public static func run(
-        kettle: @escaping @Sendable (_ pour: Pour<Action>) async throws -> Void,
+        blend: @escaping (_ pour: Pour<Action>) async throws -> Void,
         catch errorHandler: (@Sendable (_ error: any Error, _ pour: Pour<Action>) async -> Void)? = nil,
         fileID: StaticString = #fileID,
         line: UInt = #line
     ) -> Self {
         Self { pour in
             do {
-                try await kettle(pour)
+                try await blend(pour)
             } catch {
                 guard let errorHandler else {
                     os_log(
