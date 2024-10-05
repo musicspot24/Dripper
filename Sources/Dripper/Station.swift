@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public typealias StationOf<D: Dripper> = Station<D.State, D.Action>
 
@@ -68,5 +69,18 @@ public final class Station<State: Observable, Action> {
         set {
             state[keyPath: dynamicMember] = newValue
         }
+    }
+}
+
+extension Station where State: AnyObject {
+    public func bind<Member>(_ dynamicMember: WritableKeyPath<State, Member>) -> Binding<Member> {
+        Binding(
+            get: {
+                self.state[keyPath: dynamicMember]
+            },
+            set: { newValue in
+                self.state[keyPath: dynamicMember] = newValue
+            }
+        )
     }
 }

@@ -19,6 +19,7 @@ struct Counter: Dripper {
     @Observable
     final class State {
         var counter: Int = .zero
+        var text = ""
     }
 
     enum Action {
@@ -40,13 +41,14 @@ struct Counter: Dripper {
             case .resetCounter:
                 state.counter = .zero
             case .randomNumber:
-                return .run { pour in
+                return .run { _ in
                     func randomNumber() async throws -> Int {
                         try await Task.sleep(for: .seconds(1))
                         return Int.random(in: 0...10)
                     }
                     let randomNumber = try await randomNumber()
-                    await pour(.decreaseCounter)
+                    // FIXME: Data Race
+//                    await pour(.decreaseCounter)
                     state.counter = randomNumber
                 }
             }
@@ -103,6 +105,14 @@ struct CounterView: View {
             .padding()
             .background(.regularMaterial)
             .clipShape(.rect(cornerRadius: 10.0))
+
+            TextField(text: station.bind(\.text)) {
+                Text("Enter you name here")
+            }
+            .textFieldStyle(.roundedBorder)
+            .padding()
+
+            Text(station.text)
         }
         .font(.headline)
     }
