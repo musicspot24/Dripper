@@ -68,7 +68,7 @@ public final class Station<State: ObservableState, Action> {
     }
 
     public subscript<Member>(
-        dynamicMember dynamicMember: WritableKeyPath<State, Member>
+        dynamicMember dynamicMember: ReferenceWritableKeyPath<State, Member>
     ) -> Member {
         get {
             state[keyPath: dynamicMember]
@@ -80,7 +80,9 @@ public final class Station<State: ObservableState, Action> {
 }
 
 extension Station where State: AnyObject {
-    public func bind<Member>(_ dynamicMember: WritableKeyPath<State, Member>) -> Binding<Member> {
+    public func bind<Member>(
+        _ dynamicMember: ReferenceWritableKeyPath<State, Member>
+    ) -> Binding<Member> {
         Binding(
             get: {
                 self.state[keyPath: dynamicMember]
