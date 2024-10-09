@@ -50,8 +50,8 @@ extension Effect {
     // MARK: Static Functions
 
     public static func run(
-        blend: @escaping (_ pour: Pour<Action>) async throws -> Void,
-        catch errorHandler: ((_ error: any Error, _ pour: Pour<Action>) async -> Void)? = nil,
+        blend: @escaping @MainActor (_ pour: Pour<Action>) async throws -> Void,
+        catch errorHandler: (@MainActor (_ error: any Error, _ pour: Pour<Action>) async -> Void)? = nil,
         fileID: StaticString = #fileID,
         line: UInt = #line
     ) -> Self {

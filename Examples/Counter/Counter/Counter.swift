@@ -16,8 +16,8 @@ struct Counter: Dripper {
 
     // MARK: Nested Types
 
-    @MainActor
     @Observable
+    @MainActor
     final class State: Sendable {
         var counter: Int = .zero
         var text = ""
@@ -43,11 +43,6 @@ struct Counter: Dripper {
                 state.counter = .zero
             case .randomNumber:
                 return .run { pour in
-                    func randomNumber() async throws -> Int {
-                        try await Task.sleep(for: .seconds(1))
-                        return Int.random(in: 1...100)
-                    }
-
                     let randomNumber = try await randomNumber()
 
                     pour(.decreaseCounter)
@@ -57,6 +52,13 @@ struct Counter: Dripper {
 
             return .none
         }
+    }
+
+    // MARK: Functions
+
+    private func randomNumber() async throws -> Int {
+        try await Task.sleep(for: .seconds(1))
+        return Int.random(in: 1...100)
     }
 }
 
