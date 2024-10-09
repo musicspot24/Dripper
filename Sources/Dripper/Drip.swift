@@ -7,16 +7,20 @@
 
 import Foundation
 
-public struct Drip<State: Observable, Action>: Dripper {
+public struct Drip<State: ObservableState, Action>: Dripper {
+
+    // MARK: Nested Types
+
+    public typealias Dripping = @MainActor (_ state: State, _ action: Action) -> Effect<Action>?
 
     // MARK: Properties
 
-    @usableFromInline let drip: (State, Action) -> Effect<Action>?
+    @usableFromInline let drip: Dripping
 
     // MARK: Lifecycle
 
     @inlinable
-    public init(_ drip: @escaping (_ state: State, _ action: Action) -> Effect<Action>) {
+    public init(_ drip: @escaping Dripping) {
         self.init(internal: drip)
     }
 
@@ -25,7 +29,7 @@ public struct Drip<State: Observable, Action>: Dripper {
     }
 
     @usableFromInline
-    init(internal drip: @escaping (_ state: State, _ action: Action) -> Effect<Action>?) {
+    init(internal drip: @escaping Dripping) {
         self.drip = drip
     }
 

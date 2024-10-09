@@ -33,6 +33,7 @@ public struct Pour<Action>: Sendable {
     }
 
     public func callAsFunction(_ action: Action) {
+        guard !Task.isCancelled else { return }
         pour(action)
     }
 }
