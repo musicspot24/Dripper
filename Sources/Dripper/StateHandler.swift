@@ -7,25 +7,6 @@
 
 import Foundation
 
-// MARK: - StateYieldPolicy
-
-private protocol StateYieldPolicy {
-    associatedtype State
-    func shouldYield(oldValue: State, newValue: State) -> Bool
-}
-
-extension StateYieldPolicy {
-    fileprivate func shouldYield(oldValue _: State, newValue _: State) -> Bool {
-        true
-    }
-}
-
-extension StateYieldPolicy where State: Equatable {
-    fileprivate func shouldYield(oldValue: State, newValue: State) -> Bool {
-        oldValue != newValue
-    }
-}
-
 // MARK: - StateHandler
 
 /// `StateActor` is an actor class responsible for managing `State` in a thread-safe manner.
@@ -54,17 +35,9 @@ actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
 
     private var tasks: [UUID: Task<Void, Never>] = [:]
 
-    // MARK: Computed Properties
-
     /// Source of `State` managed by this actor.
     /// It also yields new
-    private var state: State {
-        didSet {
-            if shouldYield(oldValue: oldValue, newValue: state) {
-                continuation.yield(state)
-            }
-        }
-    }
+    private var state: State
 
     // MARK: Lifecycle
 
@@ -72,7 +45,7 @@ actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
         self.state = initialState
         self.dripper = dripper
 
-        (self.stream, continuation) = AsyncStream<State>.makeStream()
+        (stream, continuation) = AsyncStream<State>.makeStream()
     }
 
     deinit {
@@ -80,13 +53,6 @@ actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
     }
 
     // MARK: Functions
-
-    subscript<Member>(
-        dynamicMember dynamicMember: ReferenceWritableKeyPath<State, Member> & Sendable
-    ) -> Member {
-        get { state[keyPath: dynamicMember] }
-        set { state[keyPath: dynamicMember] = newValue }
-    }
 
     func pour(_ action: Action) async {
         let taskID = UUID()
@@ -104,12 +70,18 @@ actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
                 await self.removeTask(taskID)
             }
 
-            await updateTask(task, forKey: taskID)
+            tasks.updateValue(task, forKey: taskID)
         }
     }
 
-    private func updateTask(_ task: Task<Void, Never>, forKey key: UUID) {
-        tasks.updateValue(task, forKey: key)
+    subscript<Member>(
+        dynamicMember dynamicMember: ReferenceWritableKeyPath<State, Member> & Sendable
+    ) -> Member {
+        get { state[keyPath: dynamicMember] }
+        set {
+            state[keyPath: dynamicMember] = newValue
+            continuation.yield(state)
+        }
     }
 
     private func removeTask(_ key: UUID) {

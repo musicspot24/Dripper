@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftUI
+
 
 public typealias StationOf<D: Dripper> = Station<D.State, D.Action>
 
@@ -18,14 +18,15 @@ public final class Station<State: Sendable, Action: Sendable> {
 
     // MARK: Properties
 
-    private var state: State
-    private let dripper: any Dripper<State, Action>
+    /// The current state of the station.
+    ///
+    /// Since ``Dripper/Dripper/State`` is a class type, it's referenced by both ``Station`` and ``StateHandler``.
+    public private(set) var state: State
 
-    // MARK: Computed Properties
+    private let stateHandler: StateHandler<State, Action>
 
-    public var currentState: State {
-        state
-    }
+    private let continuation: AsyncStream<State>.Continuation
+    private var task: Task<Void, Never>?
 
     // MARK: Lifecycle
 
@@ -43,51 +44,61 @@ public final class Station<State: Sendable, Action: Sendable> {
         self.init(state: initialState, dripper: dripperBuilder())
     }
 
-    init<D: Dripper>(
-        state: D.State,
-        dripper: D
-    ) where D.State == State, D.Action == Action {
+    init<D: Dripper>(state: D.State, dripper: D) where D.State == State, D.Action == Action {
         self.state = state
-        self.dripper = dripper
+
+        let stateHandler = StateHandler(initialState: state, dripper: dripper)
+        self.stateHandler = stateHandler
+        self.continuation = stateHandler.continuation
+
+        // Update `state` as `StateHandler`'s `state` is updated.
+        self.task = Task { @MainActor [weak self] in
+            guard let stateStream = await self?.stateHandler.stream else { return }
+            for await state in stateStream {
+                guard let self else { break }
+                self.state = state
+            }
+        }
+    }
+
+    deinit {
+        task?.cancel()
+        continuation.finish()
     }
 
     // MARK: Functions
 
     public func pour(_ action: Action) {
-        let effect = dripper.drip(state, action)
-
-        if let effect {
-            Task {
-                await effect.blend(
-                    Pour { self.pour($0) }
-                )
-            }
+        Task {
+            await stateHandler.pour(action)
         }
     }
 
     public subscript<Member>(
         dynamicMember dynamicMember: ReferenceWritableKeyPath<State, Member>
     ) -> Member {
-        get {
-            state[keyPath: dynamicMember]
-        }
+        get { state[keyPath: dynamicMember] }
         set {
             state[keyPath: dynamicMember] = newValue
+            continuation.yield(state)
         }
     }
 }
 
-extension Station where State: AnyObject {
+#if canImport(SwiftUI)
+import SwiftUI
+
+extension Station {
     public func bind<Member>(
         _ dynamicMember: ReferenceWritableKeyPath<State, Member>
     ) -> Binding<Member> {
         Binding(
-            get: {
-                self.state[keyPath: dynamicMember]
-            },
+            get: { self.state[keyPath: dynamicMember] },
             set: { newValue in
                 self.state[keyPath: dynamicMember] = newValue
+                self.continuation.yield(self.state)
             }
         )
     }
 }
+#endif
