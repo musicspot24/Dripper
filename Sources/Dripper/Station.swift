@@ -10,13 +10,11 @@ import SwiftUI
 
 public typealias StationOf<D: Dripper> = Station<D.State, D.Action>
 
-public typealias ObservableState = Observable & Sendable
-
 // MARK: - Station
 
 @dynamicMemberLookup
 @MainActor
-public final class Station<State: ObservableState, Action> {
+public final class Station<State: Sendable, Action: Sendable> {
 
     // MARK: Properties
 

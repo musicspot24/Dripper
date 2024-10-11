@@ -13,7 +13,7 @@ public typealias DripperOf<D: Dripper> = Dripper<D.State, D.Action>
 
 @MainActor
 public protocol Dripper<State, Action>: Sendable {
-    associatedtype State: ObservableState
+    associatedtype State: Sendable
     associatedtype Action
     associatedtype Body
 

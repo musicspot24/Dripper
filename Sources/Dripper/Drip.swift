@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Drip<State: ObservableState, Action>: Dripper {
+public struct Drip<State: Sendable, Action>: Dripper {
 
     // MARK: Nested Types
 
