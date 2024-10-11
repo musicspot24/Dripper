@@ -18,14 +18,24 @@ struct Counter: Dripper {
 
     @Observable
     @MainActor
-    final class State: Sendable {
+    final class State: @preconcurrency CustomDebugStringConvertible {
+
+        // MARK: Properties
+
         var counter: Int = .zero
         var text = ""
+
+        // MARK: Computed Properties
+
+        var debugDescription: String {
+            "Count: \(counter)"
+        }
     }
 
     enum Action {
         case increaseCounter
         case decreaseCounter
+        case setCounter(value: Int)
         case resetCounter
         case randomNumber
     }
@@ -39,14 +49,14 @@ struct Counter: Dripper {
                 state.counter += 1
             case .decreaseCounter:
                 state.counter -= 1
+            case .setCounter(let value):
+                state.counter = value
             case .resetCounter:
                 state.counter = .zero
             case .randomNumber:
                 return .run { pour in
                     let randomNumber = try await randomNumber()
-
-                    pour(.decreaseCounter)
-                    state.counter = randomNumber
+                    pour(.setCounter(value: randomNumber))
                 }
             }
 

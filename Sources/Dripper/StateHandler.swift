@@ -22,7 +22,7 @@ import Foundation
 /// - `State`: The type that represents the state, must conform to `Sendable` to allow safe concurrent access.
 /// - `Action`: The type that represents actions that can be dispatched, must conform to `Sendable` to allow safe concurrent access.
 @dynamicMemberLookup
-actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
+public actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
 
     // MARK: Properties
 
@@ -46,6 +46,8 @@ actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
         self.dripper = dripper
 
         (stream, continuation) = AsyncStream<State>.makeStream()
+        // FIXME: Yielding only when state changed can be done by using `observationTracking`
+        // Create stream when observationTracking changes
     }
 
     deinit {
@@ -56,12 +58,18 @@ actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
 
     func pour(_ action: Action) async {
         let taskID = UUID()
+//        let oldState = state
         let effect = await dripper.drip(state, action)
+        // FIXME: Only yield on continuation when state has changed.
+        // Since `State` is a class, we can't know if it's changed or not by simply copy and compare
+//        if shouldYield(oldValue: oldState, newValue: state) {
+        continuation.yield(state)
+//        }
 
         if let effect { // Side-Effect occurred
             let task = Task { [weak self, taskID] in
                 guard let self else { return }
-                let pour = await Pour { action in
+                let pour = Pour { action in
                     Task {
                         await self.pour(action)
                     }
