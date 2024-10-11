@@ -10,25 +10,21 @@ import OSLog
 
 // MARK: - Effect
 
-public struct Effect<Action> {
-    public typealias Blend = (_ blend: Pour<Action>) async -> Void
-
-    @usableFromInline let blend: Blend
+public struct Effect<Action>: Sendable {
+    @usableFromInline let blend: @Sendable (_ pour: Pour<Action>) async -> Void
 
     @usableFromInline
-    init(blend: @escaping Blend) {
+    init(blend: @Sendable @escaping (_ pour: Pour<Action>) async -> Void) {
         self.blend = blend
     }
 }
 
 // MARK: - Pour
 
-@MainActor
 public struct Pour<Action>: Sendable {
-    let pour: @MainActor @Sendable (Action) -> Void
+    let pour: @Sendable (Action) -> Void
 
-    @usableFromInline
-    init(pour: @escaping @MainActor @Sendable (Action) -> Void) {
+    public init(pour: @Sendable @escaping (Action) -> Void) {
         self.pour = pour
     }
 
@@ -50,7 +46,7 @@ extension Effect {
     // MARK: Static Functions
 
     public static func run(
-        blend: @escaping @MainActor (_ pour: Pour<Action>) async throws -> Void,
+        blend: @MainActor @escaping (_ pour: Pour<Action>) async throws -> Void,
         catch errorHandler: (@MainActor (_ error: any Error, _ pour: Pour<Action>) async -> Void)? = nil,
         fileID: StaticString = #fileID,
         line: UInt = #line
