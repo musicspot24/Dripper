@@ -80,7 +80,7 @@ public final class Station<State: StationState, Action: Sendable>: StateYieldPol
 
     deinit {
         task?.cancel()
-        continuation.finish()
+        // Continuation is finished on `StateHandler`
     }
 
     // MARK: Functions

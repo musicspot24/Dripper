@@ -46,12 +46,13 @@ public actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
         self.dripper = dripper
 
         (stream, continuation) = AsyncStream<State>.makeStream()
-        // FIXME: Yielding only when state changed can be done by using `observationTracking`
-        // Create stream when observationTracking changes
+        // FIXME: Yield only when state changes
+        // Maybe we can use `observationTracking` since `state` is always `@Observable`.
     }
 
     deinit {
         for task in tasks { task.value.cancel() }
+        continuation.finish()
     }
 
     // MARK: Functions
@@ -61,7 +62,8 @@ public actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
 //        let oldState = state
         let effect = await dripper.drip(state, action)
         // FIXME: Only yield on continuation when state has changed.
-        // Since `State` is a class, we can't know if it's changed or not by simply copy and compare
+        // Since `State` is a class, we can't know if it's changed or not by simply
+        // copying and comparing them.
 //        if shouldYield(oldValue: oldState, newValue: state) {
         continuation.yield(state)
 //        }
