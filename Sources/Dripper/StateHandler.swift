@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 // MARK: - StateHandler
 
@@ -41,13 +42,13 @@ public actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
 
     // MARK: Lifecycle
 
-    init(initialState: State, dripper: some Dripper<State, Action>) {
-        self.state = initialState
+    init(initialState state: State, dripper: some Dripper<State, Action>) {
+        self.state = state
         self.dripper = dripper
 
-        (stream, continuation) = AsyncStream<State>.makeStream()
-        // FIXME: Yield only when state changes
-        // Maybe we can use `observationTracking` since `state` is always `@Observable`.
+        let (stream, continuation) = AsyncStream<State>.makeStream()
+        self.stream = stream
+        self.continuation = continuation
     }
 
     deinit {

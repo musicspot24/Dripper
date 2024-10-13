@@ -18,17 +18,33 @@ struct Counter: Dripper {
 
     @Observable
     @MainActor
-    final class State: @preconcurrency CustomDebugStringConvertible {
+    final class State: @preconcurrency CustomStringConvertible {
 
         // MARK: Properties
 
         var counter: Int = .zero
         var text = ""
 
+        @ObservationIgnored private let id: UUID
+
         // MARK: Computed Properties
 
-        var debugDescription: String {
+        var description: String {
             "Count: \(counter)"
+        }
+
+        // MARK: Lifecycle
+
+        init(counter: Int = .zero, text: String = "") {
+            let id = UUID()
+            self.id = id
+            self.counter = counter
+            self.text = text
+            os_log("State initialized: \(id)")
+        }
+
+        deinit {
+            os_log("State deinitialized: \(self.id)")
         }
     }
 
@@ -137,14 +153,5 @@ struct CounterView: View {
         station: Station(initialState: Counter.State()) {
             Counter()
         }
-    )
-}
-
-#Preview {
-    CounterView(
-        station: Station(
-            initialState: Counter.State(),
-            dripper: Counter()
-        )
     )
 }

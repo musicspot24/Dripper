@@ -11,13 +11,30 @@ import Dripper
 
 @main
 struct CounterApp: App {
-    private let counterStation = Station(initialState: Counter.State()) {
-        Counter()
-    }
+
+    // MARK: Properties
+
+    @State private var path: [Int] = []
+
+    // MARK: Computed Properties
 
     var body: some Scene {
         WindowGroup {
-            CounterView(station: counterStation)
+            NavigationStack(path: $path) {
+                List {
+                    NavigationLink("1", value: 1)
+                    NavigationLink("2", value: 2)
+                    NavigationLink("3", value: 3)
+                }
+                .navigationTitle("Starting Counter")
+                .navigationDestination(for: Int.self) { number in
+                    CounterView(
+                        station: Station(initialState: Counter.State(counter: number)) {
+                            Counter()
+                        }
+                    )
+                }
+            }
         }
     }
 }
