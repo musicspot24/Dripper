@@ -8,7 +8,7 @@
 import Foundation
 
 @resultBuilder
-public enum DripperBuilder<State: ObservableState, Action> {
+public enum DripperBuilder<State: StationState, Action> {
     @inlinable
     public static func buildBlock<D: Dripper<State, Action>>(_ dripper: D) -> D {
         dripper
@@ -19,8 +19,8 @@ public enum DripperBuilder<State: ObservableState, Action> {
         expression
     }
 
-    @inlinable
     @MainActor
+    @inlinable
     public static func buildExpression(
         _ expression: any Dripper<State, Action>
     ) -> Drip<State, Action> {

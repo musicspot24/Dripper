@@ -18,14 +18,40 @@ struct Counter: Dripper {
 
     @Observable
     @MainActor
-    final class State: Sendable {
+    final class State: @preconcurrency CustomStringConvertible {
+
+        // MARK: Properties
+
         var counter: Int = .zero
         var text = ""
+
+        @ObservationIgnored private let id: UUID
+
+        // MARK: Computed Properties
+
+        var description: String {
+            "Count: \(counter)"
+        }
+
+        // MARK: Lifecycle
+
+        init(counter: Int = .zero, text: String = "") {
+            let id = UUID()
+            self.id = id
+            self.counter = counter
+            self.text = text
+            os_log("State initialized: \(id)")
+        }
+
+        deinit {
+            os_log("State deinitialized: \(self.id)")
+        }
     }
 
     enum Action {
         case increaseCounter
         case decreaseCounter
+        case setCounter(value: Int)
         case resetCounter
         case randomNumber
     }
@@ -39,14 +65,14 @@ struct Counter: Dripper {
                 state.counter += 1
             case .decreaseCounter:
                 state.counter -= 1
+            case .setCounter(let value):
+                state.counter = value
             case .resetCounter:
                 state.counter = .zero
             case .randomNumber:
                 return .run { pour in
                     let randomNumber = try await randomNumber()
-
-                    pour(.decreaseCounter)
-                    state.counter = randomNumber
+                    pour(.setCounter(value: randomNumber))
                 }
             }
 
@@ -127,14 +153,5 @@ struct CounterView: View {
         station: Station(initialState: Counter.State()) {
             Counter()
         }
-    )
-}
-
-#Preview {
-    CounterView(
-        station: Station(
-            initialState: Counter.State(),
-            dripper: Counter()
-        )
     )
 }
