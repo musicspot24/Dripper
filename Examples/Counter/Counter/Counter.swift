@@ -98,7 +98,7 @@ struct CounterView: View {
 
     // MARK: Properties
 
-    var station: StationOf<Counter>
+    let station: StationOf<Counter>
 
     // MARK: Content
 
