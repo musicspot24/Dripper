@@ -11,7 +11,6 @@ public typealias DripperOf<D: Dripper> = Dripper<D.State, D.Action>
 
 // MARK: - Dripper
 
-@MainActor
 public protocol Dripper<State, Action>: Sendable {
     associatedtype State: StationState
     associatedtype Action

@@ -19,7 +19,6 @@ public enum DripperBuilder<State: StationState, Action> {
         expression
     }
 
-    @MainActor
     @inlinable
     public static func buildExpression(
         _ expression: any Dripper<State, Action>

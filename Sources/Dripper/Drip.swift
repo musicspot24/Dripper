@@ -11,13 +11,13 @@ public struct Drip<State: StationState, Action>: Dripper {
 
     // MARK: Properties
 
-    @usableFromInline let drip: @MainActor (State, Action) -> Effect<Action>?
+    @usableFromInline let drip: @Sendable (State, Action) -> Effect<Action>?
 
     // MARK: Lifecycle
 
     @inlinable
     public init(
-        _ drip: @MainActor @escaping (_ state: State, _ action: Action) -> Effect<Action>
+        _ drip: @Sendable @escaping (_ state: State, _ action: Action) -> Effect<Action>
     ) {
         self.init(internal: drip)
     }
@@ -28,7 +28,7 @@ public struct Drip<State: StationState, Action>: Dripper {
     }
 
     @usableFromInline
-    init(internal drip: @MainActor @escaping (State, Action) -> Effect<Action>?) {
+    init(internal drip: @Sendable @escaping (State, Action) -> Effect<Action>?) {
         self.drip = drip
     }
 

@@ -17,8 +17,10 @@ struct Counter: Dripper {
     // MARK: Nested Types
 
     @Observable
-    @MainActor
-    final class State: @preconcurrency CustomStringConvertible {
+    // `State` is thread-safe when used within `Station`. We're using actor
+    // `StateHandler` for thread-safe mutation.
+    // swiftlint:disable:next no_unchecked_sendable
+    final class State: @unchecked Sendable, CustomStringConvertible {
 
         // MARK: Properties
 
