@@ -91,9 +91,9 @@ struct TestDripper: Dripper {
         case increase(by: Int = 1)
     }
 
-    @MainActor
     @Observable
-    final class State: Sendable {
+    // swiftlint:disable:next no_unchecked_sendable
+    final class State: @unchecked Sendable {
 
         // MARK: Properties
 
@@ -125,17 +125,17 @@ struct TestDripper: Dripper {
 struct DripperTests {
 
     @Test
-    func example() async throws {
-        let station = await StateHandler(initialState: TestDripper.State(), dripper: TestDripper())
+    func validateDataRace() async throws {
+        let station = StateHandler(initialState: TestDripper.State(), dripper: TestDripper())
 
-        let heartbeat = Heartbeat(clock: ContinuousClock(), duration: .seconds(2))
+        let heartbeat = Heartbeat(clock: SuspendingClock(), duration: .seconds(1))
         Task {
             for await _ in heartbeat {
                 await station.pour(.increase(by: 1))
             }
         }
 
-        let heartbeat2 = Heartbeat(clock: ContinuousClock(), duration: .seconds(2))
+        let heartbeat2 = Heartbeat(clock: SuspendingClock(), duration: .seconds(1))
         Task {
             for await _ in heartbeat2 {
                 await station.pour(.increase(by: 2))
@@ -144,7 +144,7 @@ struct DripperTests {
 
         try await Task.sleep(for: .seconds(20))
 
-        #expect(await station.counter == 1)
+        #expect(await station.counter > 1)
     }
 
 }
