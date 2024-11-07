@@ -64,14 +64,14 @@ struct Counter: Dripper {
 ```
 
 > [!NOTE]
-> `State` class should be annotated with `@unchecked Sendable` to suppress the compiler error.\
-> This is because `State` actually cannot be `Sendable` standalone.\
-> However, while using `State` within `Station`, it's guaranteed to be thread-safe because it is managed by actor called `StateHandler`.
+> You need to add `@unchecked Sendable` to the `State` class to suppress compiler errors.
+> While `State` itself is actually not thread-safe, when used within `Station`, it is guaranteed to be thread-safe since it's managed by the `StateHandler` actor.
 >
-> We'll find some workaround for this in the future.
+> We'll implement a better solution for this in a future update.
+> Also, feel free to suggest any improvements on this issue! 😊
 
 ### Station
-In SwiftUI view, you can use `Dripper` by using `Station` that uses `Dripper` as its Generic type.
+To use `Dripper` in your SwiftUI views, create a `Station` instance with `Dripper` as its generic type parameter.
 
 ```swift
 import SwiftUI
@@ -92,13 +92,15 @@ struct ContentView: View {
         }
     )
 }
+```
 
-You can trigger `Action` with `pour` method, and you can observe the state with just accessing the property of `station`.
+You can trigger `Action` using the `pour` method and directly access state through the `Station` properties.
 
 ### Effects
 
-You can use `Effect` to handle side-effects like async operation.\
-Actually, `.none` you saw in the `Dripper` section is one of `Effect` which is meaning there's no side-effect.
+`Effect` helps you handle side-effects such as asynchronous operations.\
+Remember the `.none` we saw in the `Dripper` example?\
+Actually, that's one of `Effect` that indicates no side-effects will occur.
 
 Here's an example of how to use `Effect`:
 
@@ -125,6 +127,10 @@ var body: some Dripper<State, Action> {
 }
 ```
 
-You can use `.run` to handle side-effect.\
-It takes a closure that takes `pour` as an argument.\
-You can trigger another action by calling `pour` inside the closure.
+To handle side-effects, use `.run` with a closure that receives a `pour` function.\
+Inside this closure, you can trigger additional actions by calling `pour` with desired `Action` as parameter.
+
+---
+Thanks for checking out Dripper! Questions and contributions are always welcome 😊
+
+MIT license - [LICENSE](https://github.com/musicspot24/Dripper?tab=MIT-1-ov-file#)
