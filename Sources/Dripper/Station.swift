@@ -40,7 +40,7 @@ public final class Station<State: StationState, Action: Sendable>: StateYieldPol
     /// Since ``Dripper/Dripper/State`` is a class type, it's referenced by both ``Station`` and ``StateHandler``.
     public private(set) var state: State
 
-    private let stateHandler: StateHandler<State, Action>
+    private let stateStorage: StateStorage<State, Action>
 
     private let continuation: AsyncStream<State>.Continuation
     private var task: Task<Void, Never>?
@@ -64,13 +64,13 @@ public final class Station<State: StationState, Action: Sendable>: StateYieldPol
     init<D: Dripper>(state: D.State, dripper: D) where D.State == State, D.Action == Action {
         self.state = state
 
-        let stateHandler = StateHandler(initialState: state, dripper: dripper)
-        self.stateHandler = stateHandler
-        self.continuation = stateHandler.continuation
+        let stateStorage = StateStorage(initialState: state, dripper: dripper)
+        self.stateStorage = stateStorage
+        self.continuation = stateStorage.continuation
 
         // Update `state` as `StateHandler`'s `state` is updated.
         self.task = Task { @MainActor [weak self] in
-            guard let stateStream = await self?.stateHandler.stream else { return }
+            guard let stateStream = await self?.stateStorage.stream else { return }
             for await state in stateStream {
                 guard let self else { break }
                 self.state = state
@@ -80,14 +80,13 @@ public final class Station<State: StationState, Action: Sendable>: StateYieldPol
 
     deinit {
         task?.cancel()
-        // Continuation is finished on `StateHandler`
     }
 
     // MARK: Functions
 
     public func pour(_ action: Action) {
         Task {
-            await stateHandler.pour(action)
+            await stateStorage.pour(action)
         }
     }
 
@@ -110,7 +109,9 @@ extension Station {
         _ dynamicMember: ReferenceWritableKeyPath<State, Member>
     ) -> Binding<Member> {
         Binding(
-            get: { self.state[keyPath: dynamicMember] },
+            get: {
+                self.state[keyPath: dynamicMember]
+            },
             set: { newValue in
                 self.state[keyPath: dynamicMember] = newValue
                 self.continuation.yield(self.state)

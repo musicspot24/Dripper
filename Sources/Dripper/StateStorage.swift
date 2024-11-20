@@ -1,5 +1,5 @@
 //
-//  StateHandler.swift
+//  StateStorage.swift
 //  Dripper
 //
 //  Created by 이창준 on 10/10/24.
@@ -23,7 +23,7 @@ import OSLog
 /// - `State`: The type that represents the state, must conform to `Sendable` to allow safe concurrent access.
 /// - `Action`: The type that represents actions that can be dispatched, must conform to `Sendable` to allow safe concurrent access.
 @dynamicMemberLookup
-public actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
+public actor StateStorage<State: Sendable, Action: Sendable>: StateYieldPolicy {
 
     // MARK: Properties
 
@@ -38,7 +38,7 @@ public actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
 
     /// Source of `State` managed by this actor.
     /// It also yields new
-    private var state: State
+    @MainActor private var state: State
 
     // MARK: Lifecycle
 
@@ -66,7 +66,7 @@ public actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
         // Since `State` is a class, we can't know if it's changed or not by simply
         // copying and comparing them.
 //        if shouldYield(oldValue: oldState, newValue: state) {
-        continuation.yield(state)
+        await continuation.yield(state)
 //        }
 
         if let effect { // Side-Effect occurred
@@ -85,6 +85,7 @@ public actor StateHandler<State: Sendable, Action: Sendable>: StateYieldPolicy {
         }
     }
 
+    @MainActor
     subscript<Member>(
         dynamicMember dynamicMember: ReferenceWritableKeyPath<State, Member> & Sendable
     ) -> Member {
