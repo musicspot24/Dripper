@@ -35,7 +35,7 @@ public final class Station<State: StationState, Action: Sendable>: StateYieldPol
 
     // MARK: Properties
 
-    private let state: StateStorage<State, Action>
+    public let state: StateStorage<State, Action>
 
     // MARK: Lifecycle
 
