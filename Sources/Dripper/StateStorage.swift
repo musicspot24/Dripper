@@ -58,6 +58,17 @@ public actor StateStorage<State: Sendable, Action: Sendable>: StateYieldPolicy {
 
     // MARK: Functions
 
+    @MainActor
+    public subscript<Member>(
+        dynamicMember dynamicMember: ReferenceWritableKeyPath<State, Member> & Sendable
+    ) -> Member {
+        get { state[keyPath: dynamicMember] }
+        set {
+            state[keyPath: dynamicMember] = newValue
+            continuation.yield(state)
+        }
+    }
+
     func pour(_ action: Action) async {
         let taskID = UUID()
 //        let oldState = state
@@ -82,17 +93,6 @@ public actor StateStorage<State: Sendable, Action: Sendable>: StateYieldPolicy {
             }
 
             tasks.updateValue(task, forKey: taskID)
-        }
-    }
-
-    @MainActor
-    subscript<Member>(
-        dynamicMember dynamicMember: ReferenceWritableKeyPath<State, Member> & Sendable
-    ) -> Member {
-        get { state[keyPath: dynamicMember] }
-        set {
-            state[keyPath: dynamicMember] = newValue
-            continuation.yield(state)
         }
     }
 

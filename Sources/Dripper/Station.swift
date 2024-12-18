@@ -35,15 +35,7 @@ public final class Station<State: StationState, Action: Sendable>: StateYieldPol
 
     // MARK: Properties
 
-    /// The current state of the station.
-    ///
-    /// Since ``Dripper/Dripper/State`` is a class type, it's referenced by both ``Station`` and ``StateHandler``.
-    public private(set) var state: State
-
-    private let stateStorage: StateStorage<State, Action>
-
-    private let continuation: AsyncStream<State>.Continuation
-    private var task: Task<Void, Never>?
+    private let state: StateStorage<State, Action>
 
     // MARK: Lifecycle
 
@@ -62,42 +54,25 @@ public final class Station<State: StationState, Action: Sendable>: StateYieldPol
     }
 
     init<D: Dripper>(state: D.State, dripper: D) where D.State == State, D.Action == Action {
-        self.state = state
-
         let stateStorage = StateStorage(initialState: state, dripper: dripper)
-        self.stateStorage = stateStorage
-        self.continuation = stateStorage.continuation
-
-        // Update `state` as `StateHandler`'s `state` is updated.
-        self.task = Task { @MainActor [weak self] in
-            guard let stateStream = await self?.stateStorage.stream else { return }
-            for await state in stateStream {
-                guard let self else { break }
-                self.state = state
-            }
-        }
+        self.state = stateStorage
     }
 
-    deinit {
-        task?.cancel()
-    }
+    deinit { }
 
     // MARK: Functions
 
     public func pour(_ action: Action) {
         Task {
-            await stateStorage.pour(action)
+            await state.pour(action)
         }
     }
 
     public subscript<Member>(
-        dynamicMember dynamicMember: ReferenceWritableKeyPath<State, Member>
+        dynamicMember dynamicMember: ReferenceWritableKeyPath<StateStorage<State, Action>, Member>
     ) -> Member {
         get { state[keyPath: dynamicMember] }
-        set {
-            state[keyPath: dynamicMember] = newValue
-            continuation.yield(state)
-        }
+        set { state[keyPath: dynamicMember] = newValue }
     }
 }
 
@@ -106,7 +81,7 @@ import SwiftUI
 
 extension Station {
     public func bind<Member>(
-        _ dynamicMember: ReferenceWritableKeyPath<State, Member>
+        _ dynamicMember: ReferenceWritableKeyPath<StateStorage<State, Action>, Member>
     ) -> Binding<Member> {
         Binding(
             get: {
@@ -114,7 +89,6 @@ extension Station {
             },
             set: { newValue in
                 self.state[keyPath: dynamicMember] = newValue
-                self.continuation.yield(self.state)
             }
         )
     }
