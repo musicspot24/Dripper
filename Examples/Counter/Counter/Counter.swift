@@ -56,6 +56,7 @@ struct Counter: Dripper {
         case setCounter(value: Int)
         case resetCounter
         case randomNumber
+        case updateText(value: String)
     }
 
     // MARK: Computed Properties
@@ -65,17 +66,24 @@ struct Counter: Dripper {
             switch action {
             case .increaseCounter:
                 state.counter += 1
+
             case .decreaseCounter:
                 state.counter -= 1
+
             case .setCounter(let value):
                 state.counter = value
+
             case .resetCounter:
                 state.counter = .zero
+
             case .randomNumber:
                 return .run { pour in
                     let randomNumber = try await randomNumber()
                     pour(.setCounter(value: randomNumber))
                 }
+
+            case .updateText(let value):
+                state.text = value
             }
 
             return .none
@@ -138,7 +146,7 @@ struct CounterView: View {
             .background(.regularMaterial)
             .clipShape(.rect(cornerRadius: 10.0))
 
-            TextField(text: station.bind(\.text)) {
+            TextField(text: station.bind(\.text, pour: { .updateText(value: $0) })) {
                 Text("Enter you name here")
             }
             .textFieldStyle(.roundedBorder)
@@ -147,6 +155,9 @@ struct CounterView: View {
             Text(station.text)
         }
         .font(.headline)
+        .onChange(of: station.text) { _, newValue in
+            Logger().info("\(newValue)")
+        }
     }
 }
 

@@ -81,10 +81,10 @@ public actor StateStorage<State: Sendable, Action: Sendable>: StateYieldPolicy {
 //        }
 
         if let effect { // Side-Effect occurred
-            let task = Task { [weak self, taskID] in
+            let task = Task(priority: .userInitiated) { [weak self, taskID] in
                 guard let self else { return }
                 let pour = Pour { action in
-                    Task {
+                    Task(priority: .userInitiated) {
                         await self.pour(action)
                     }
                 }

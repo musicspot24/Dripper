@@ -63,7 +63,7 @@ public final class Station<State: StationState, Action: Sendable>: StateYieldPol
     // MARK: Functions
 
     public func pour(_ action: Action) {
-        Task {
+        Task(priority: .userInitiated) {
             await state.pour(action)
         }
     }
@@ -81,14 +81,18 @@ import SwiftUI
 
 extension Station {
     public func bind<Member>(
-        _ dynamicMember: ReferenceWritableKeyPath<StateStorage<State, Action>, Member>
+        _ dynamicMember: ReferenceWritableKeyPath<StateStorage<State, Action>, Member>,
+        pour bindAction: @escaping (Member) -> Action
     ) -> Binding<Member> {
         Binding(
             get: {
                 self.state[keyPath: dynamicMember]
             },
             set: { newValue in
-                self.state[keyPath: dynamicMember] = newValue
+                let action = bindAction(newValue)
+                Task(priority: .userInitiated) {
+                    await self.state.pour(action)
+                }
             }
         )
     }
